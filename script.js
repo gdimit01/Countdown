@@ -17,6 +17,7 @@ function startCountdown() {
       if (currentNumber <= 0) {
         clearInterval(countdown);
         finalMessage.style.display = "block";
+        startButton.disabled = false; // Enable the start button when the countdown is finished
       } else {
         currentNumber--;
         inSpan.textContent = currentNumber;
@@ -27,6 +28,7 @@ function startCountdown() {
       }
     }
   }, 1000);
+  startButton.disabled = true; // Disable the start button after the first click
 }
 
 function pauseCountdown() {
@@ -38,6 +40,7 @@ function resetCountdown() {
   clearInterval(countdown);
   isPaused = false;
   pauseButton.textContent = "Pause";
+  startButton.disabled = false; // Enable the start button when the countdown is reset
   startCountdown();
 }
 

@@ -10,6 +10,8 @@ let currentNumber;
 let isPaused = false;
 
 function startCountdown() {
+  const timeWarning = document.getElementById("timeWarning"); // Get the warning message element
+
   currentNumber = parseInt(startNumberInput.value);
   inSpan.textContent = currentNumber;
   countdown = setInterval(() => {
@@ -17,7 +19,7 @@ function startCountdown() {
       if (currentNumber <= 0) {
         clearInterval(countdown);
         finalMessage.style.display = "block";
-        startButton.disabled = false; // Enable the start button when the countdown is finished
+        startButton.disabled = false;
       } else {
         currentNumber--;
         inSpan.textContent = currentNumber;
@@ -25,11 +27,19 @@ function startCountdown() {
           duration: 1000,
           fill: "forwards",
         });
+
+        // Show or hide the warning message based on the countdown value
+        if (currentNumber === 30) {
+          timeWarning.style.display = "block";
+        } else if (currentNumber === 29) {
+          timeWarning.style.display = "none";
+        }
       }
     }
   }, 1000);
-  startButton.disabled = true; // Disable the start button after the first click
+  startButton.disabled = true;
 }
+
 
 function pauseCountdown() {
   isPaused = !isPaused;

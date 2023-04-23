@@ -4,22 +4,26 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
-    <title>Countdown</title>
+    <title>Animated Countdown</title>
   </head>
   <body>
+    <div class="input-container">
+      <label for="startNumber">Start countdown from: </label>
+      <input type="number" id="startNumber" value="60" min="0" />
+      <button id="start">Start</button>
+    </div>
     <div class="counter">
       <div class="nums">
-        <span id="countdown">60</span>
+        <span class="in"></span>
       </div>
       <h4>Get Ready</h4>
     </div>
 
     <div class="final">
       <h1>GO</h1>
-      <button id="replay">
-        <span>Replay</span>
-      </button>
     </div>
+    <button id="pause">Pause</button>
+    <button id="replay">Replay</button>
     <script src="script.js"></script>
   </body>
 </html>

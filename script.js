@@ -1,40 +1,46 @@
-const nums = document.querySelectorAll(".nums span");
-const counter = document.querySelector(".counter");
+const startNumberInput = document.getElementById("startNumber");
+const startButton = document.getElementById("start");
+const pauseButton = document.getElementById("pause");
+const replayButton = document.getElementById("replay");
+const inSpan = document.querySelector(".in");
 const finalMessage = document.querySelector(".final");
-const replay = document.querySelector("#replay");
 
-runAnimation();
+let countdown;
+let currentNumber;
+let isPaused = false;
 
-function resetDOM() {
-  counter.classList.remove("hide");
-  finalMessage.classList.remove("show");
-
-  nums.forEach((num) => {
-    num.classList.value = "";
-  });
-
-  nums[0].classList.add("in");
-}
-
-function runAnimation() {
-  nums.forEach((num, idx) => {
-    const nextToLast = nums.length - 1;
-
-    num.addEventListener("animationend", (e) => {
-      if (e.animationName === "goIn" && idx !== nextToLast) {
-        num.classList.remove("in");
-        num.classList.add("out");
-      } else if (e.animationName === "goOut" && num.nextElementSibling) {
-        num.nextElementSibling.classList.add("in");
+function startCountdown() {
+  currentNumber = parseInt(startNumberInput.value);
+  inSpan.textContent = currentNumber;
+  countdown = setInterval(() => {
+    if (!isPaused) {
+      if (currentNumber <= 0) {
+        clearInterval(countdown);
+        finalMessage.style.display = "block";
       } else {
-        counter.classList.add("hide");
-        finalMessage.classList.add("show");
+        currentNumber--;
+        inSpan.textContent = currentNumber;
+        inSpan.animate([{ opacity: 1 }, { opacity: 0 }], {
+          duration: 1000,
+          fill: "forwards",
+        });
       }
-    });
-  });
+    }
+  }, 1000);
 }
 
-replay.addEventListener("click", () => {
-  resetDOM();
-  runAnimation();
-});
+function pauseCountdown() {
+  isPaused = !isPaused;
+  pauseButton.textContent = isPaused ? "Resume" : "Pause";
+}
+
+function resetCountdown() {
+  clearInterval(countdown);
+  isPaused = false;
+  pauseButton.textContent = "Pause";
+  startCountdown();
+}
+
+startButton.addEventListener("click", startCountdown);
+pauseButton.addEventListener("click", pauseCountdown);
+replayButton.addEventListener("click", resetCountdown);
